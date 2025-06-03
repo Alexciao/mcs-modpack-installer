@@ -9,20 +9,16 @@ log = logging.getLogger()
 
 def get_prism_url(version: str = "9.4") -> str:
     """
-    Downloads the Prism Launcher installer based on the operating system.
+    Downloads the Prism Launcher installer for Windows.
     Returns the path to the downloaded installer.
     """
     system = platform.system()
+
+    if system != "Windows":
+        raise NotImplementedError("This application only supports Windows")
+
     url = f"https://github.com/PrismLauncher/PrismLauncher/releases/download/{version}/"
-
-    if system == "Windows":
-        url += f"PrismLauncher-Windows-MSVC-Setup-{version}.exe"
-
-    elif system == "Darwin":  # macOS
-        url += f"PrismLauncher-macOS-{version}.zip"
-
-    else:
-        raise NotImplementedError("System unsupported")
+    url += f"PrismLauncher-Windows-MSVC-Setup-{version}.exe"
 
     return url
 
@@ -60,21 +56,14 @@ def download_installer(url: str) -> str:
 def run_installer(filename: str) -> None:
     """
     Installs Prism Launcher using the downloaded installer file.
-    This function is a placeholder and should be implemented based on the OS.
     """
     system = platform.system()
+
+    if system != "Windows":
+        raise NotImplementedError("This application only supports Windows")
+
     log.info(f"Installing...")
-
-    if system == "Windows":
-        # Windows installation logic (e.g., running the installer)
-        subprocess.run([filename, "/S", "/ALLUSERS=0", "/LANG=ENGLISH"], check=True)
-    elif system == "Darwin":
-
-        subprocess.run(
-            ["unzip", filename, "-d", "/Applications/PrismLauncher"], check=True
-        )
-    else:
-        raise NotImplementedError("Installation not implemented for this OS")
+    subprocess.run([filename, "/S", "/ALLUSERS=0", "/LANG=ENGLISH"], check=True)
 
 
 def install_prism_launcher(version: str = "9.4"):

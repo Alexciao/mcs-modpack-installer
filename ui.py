@@ -25,10 +25,10 @@ class TextHandler(logging.Handler):
 
 # Example function to simulate work
 def start_task():
-    import installer
+    import main
 
     def task():
-        installer.install_prism_launcher()
+        main.install_prism_launcher()
 
     threading.Thread(target=task, daemon=False).start()
 
